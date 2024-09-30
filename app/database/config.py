@@ -1,14 +1,10 @@
-from sqlalchemy import create_engine, event
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import Engine
 
-dataBaseName = "gestionbd"
-userName = "root"   
-userPassword = " "
-server = "localhost"
-conexionPort = "3306"
 
-connectionToDataBase = f"mysql+mysqlconnector://{userName}:{userPassword}@{server}:{conexionPort}/{dataBaseName}"
+
+connectionToDataBase = 'jdbc:sqlserver://adrian-123456.database.windows.net:1433;database=ControlGastos;user=adrian-admin@adrian-123456;password=Duhast2379497;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;'
 
 engine = create_engine(connectionToDataBase)
 
