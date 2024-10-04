@@ -8,12 +8,14 @@ Base = declarative_base()
 class Usuario(Base):
     __tablename__ = 'usuario'
     id=Column(Integer, primary_key=True, autoincrement=True)
-    nomre=Column(String(50))
-    edad=Column(Integer(50))
+    nombre=Column(String(50))
+    edad=Column(Integer)
     correo=Column(String(20))
     contraseña=Column(String(10))
-    ciudad=Column(Integer(50))
-    telefono=Column(Integer(11))
+    ciudad=Column(Integer)
+    fechaRegistro=Column(Date)
+    telefono=Column(Integer)
+
 
 class Gasto(Base):
     __tablename__ = 'gasto'
@@ -33,12 +35,6 @@ class MetodoPago(Base):
     __tablename__ = 'MetodoPago'
     id=Column(Integer, primary_key=True, autoincrement=True)
     nombreMetodo=Column(String(50))
-    valor=Column(Integer(50))
+    valor=Column(Integer)
     descripcion=Column(String(250))
 
-class Factura(Base):
-    __tablename__ = 'Factura'
-    id=Column(Integer, primary_key=True, autoincrement=True)
-    numeroTransaccion=Column(Integer(20))
-    valor=Column(Integer(50))
-    descripcion=Column(String(250))

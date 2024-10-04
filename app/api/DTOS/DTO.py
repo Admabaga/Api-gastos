@@ -14,7 +14,7 @@ class UsuarioDTOPeticion(BaseModel): #En petición se piden todos losdatos
     class Config:
         orm_mode=True
 
-class UsuarioDTORespuesta(): #En respuesta se muestran los necesarios
+class UsuarioDTORespuesta(BaseModel): #En respuesta se muestran los necesarios
     id:int
     nombre:str
     telefono:str
@@ -22,7 +22,7 @@ class UsuarioDTORespuesta(): #En respuesta se muestran los necesarios
     class Config:
         orm_mode=True
 
-class GastoDTOPeticion():
+class GastoDTOPeticion(BaseModel):
     monto:int
     fecha:date
     descripcion:str
@@ -30,48 +30,36 @@ class GastoDTOPeticion():
     class Config:
         orm_mode=True
 
-class GastoDTORespuesta():
+class GastoDTORespuesta(BaseModel):
     fecha:date
     descripcion:str
     nombre:str
     class Config:
         orm_mode=True
 
-class CategoriaDTOPeticion():
+class CategoriaDTOPeticion(BaseModel):
     nombreCategoria:str
     fotoIcono:str
     class Config:
         orm_mode=True
 
-class CategoriaDTORespuesta():
+class CategoriaDTORespuesta(BaseModel):
     nombreCategoria:str
     fotoIcono:str
     class Config:
         orm_mode=True
 
-class MetodoPagoDTOPeticion():
+class MetodoPagoDTOPeticion(BaseModel):
     nombre:str
     valor:int
     descripcion:str
     class Config:
         orm_mode=True
 
-class MetodoPagoDTORespuesta():
+class MetodoPagoDTORespuesta(BaseModel):
     nombre:str
     valor:int
     descripcion:str
     class Config:
         orm_mode=True
 
-class facturadeoDTOPeticion():
-    numeroTransaccion:int
-    valor:int
-    descripcion:str
-    class Config:
-        orm_mode=True
-
-class facturadeoDTORespuesta():
-    valor:int
-    descripcion:str
-    class Config:
-        orm_mode=True

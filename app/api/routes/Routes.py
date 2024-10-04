@@ -9,7 +9,7 @@ from app.api.entitys.Entitys import Usuario, Gasto, Categoria
 from app.database.config import sessionLocal, engine
 
 # para que una api funcione debe tener un archivo enrutador
-rutas = APIRouter()  # Estoe s conocido como ENDPOINTS
+routes = APIRouter()  # Estoe s conocido como ENDPOINTS
 
 
 # Crear una funcion para establecer cuando yo quiera y necesite conexion hacia la base de datos
@@ -31,12 +31,12 @@ def getDataBase():
 
 # registrando o guardando un usuario en la base de datos
 
-@rutas.post("/usuarios", response_model=UsuarioDTORespuesta)
+@routes.post("/usuarios", response_model=UsuarioDTORespuesta)
 def guardarUsuario(datosPeticion: UsuarioDTOPeticion,
                    db: Session = Depends(getDataBase)):  # los : en python establece el tipo de dato
     try:
         usuario = Usuario(
-            nombres=datosPeticion.nombre,
+            nombre=datosPeticion.nombre,
             edad=datosPeticion.edad,
             telefono=datosPeticion.telefono,
             correo=datosPeticion.correo,
@@ -50,10 +50,10 @@ def guardarUsuario(datosPeticion: UsuarioDTOPeticion,
         return usuario  # Me muestra usuario
     except Exception as error:
         db.rollback()
-        raise HTTPException(status_code=400, detail="Error al registrar el usuario")
+        raise HTTPException(status_code=400, detail= f"Error al registrar el usuario {error}")
 
 
-@rutas.post("/gastos", response_model=GastoDTORespuesta)
+@routes.post("/gastos", response_model=GastoDTORespuesta)
 def guardarGasto(datosPeticion: GastoDTOPeticion,
                  db: Session = Depends(getDataBase)):  # los : en python establece el tipo de dato
     try:
@@ -69,10 +69,10 @@ def guardarGasto(datosPeticion: GastoDTOPeticion,
         return gasto  # Me muestra usuario
     except Exception as error:
         db.rollback()
-        raise HTTPException()
+        raise HTTPException(status_code=400, detail= f"Error al registrar el usuario {error}")
 
 
-@rutas.post("/categorias", response_model=CategoriaDTORespuesta)
+@routes.post("/categorias", response_model=CategoriaDTORespuesta)
 def guardarCategoria(datosPeticion: CategoriaDTOPeticion,
                      db: Session = Depends(getDataBase)):  # los : en python establece el tipo de dato
     try:
@@ -86,10 +86,10 @@ def guardarCategoria(datosPeticion: CategoriaDTOPeticion,
         return categoria  # Me muestra usuario
     except Exception as error:
         db.rollback()
-        raise HTTPException()
+        raise HTTPException(status_code=400, detail= f"Error al registrar el usuario {error}")
 
 
-@rutas.post("/metodoPagos", response_model=MetodoPagoDTORespuesta)
+@routes.post("/metodoPagos", response_model=MetodoPagoDTORespuesta)
 def guardarCategoria(datosPeticion: MetodoPagoDTOPeticion,
                      db: Session = Depends(getDataBase)):  # los : en python establece el tipo de dato
     try:
@@ -103,47 +103,47 @@ def guardarCategoria(datosPeticion: MetodoPagoDTOPeticion,
         return metodoPago  # Me muestra usuario
     except Exception as error:
         db.rollback()
-        raise HTTPException()
+        raise HTTPException(status_code=400, detail= f"Error al registrar el usuario {error}")
 
 
-@rutas.get("/usuarios", response_model=List[UsuarioDTORespuesta])
+@routes.get("/usuarios", response_model=List[UsuarioDTORespuesta])
 def buscarUsuario(db: Session = Depends(getDataBase)):
     try:
         listadoUsuarios = db.query(Usuario).all()
         return listadoUsuarios
     except Exception as error:
         db.rollback()
-        raise HTTPException()
+        raise HTTPException(status_code=400, detail= f"Error al registrar el usuario {error}")
 
 
-@rutas.get("/gastos", response_model=List[GastoDTORespuesta])
+@routes.get("/gastos", response_model=List[GastoDTORespuesta])
 def buscarGasto(db: Session = Depends(getDataBase)):
     try:
         listadoGastos = db.query(Usuario).all()
         return listadoGastos
     except Exception as error:
         db.rollback()
-        raise HTTPException()
+        raise HTTPException(status_code=400, detail= f"Error al registrar el usuario {error}")
 
 
-@rutas.get("/categorias", response_model=List[CategoriaDTORespuesta])
+@routes.get("/categorias", response_model=List[CategoriaDTORespuesta])
 def buscarCategoria(db: Session = Depends(getDataBase)):
     try:
         listadoCategoria = db.query(Usuario).all()
         return listadoCategoria
     except Exception as error:
         db.rollback()
-        raise HTTPException()
+        raise HTTPException(status_code=400, detail= f"Error al registrar el usuario {error}")
 
 
-@rutas.get("/metodoPagos", response_model=List[MetodoPagoDTORespuesta])
+@routes.get("/metodoPagos", response_model=List[MetodoPagoDTORespuesta])
 def buscarMetodoPago(db: Session = Depends(getDataBase)):
     try:
         listadoMetodoPago = db.query(Usuario).all()
         return listadoMetodoPago
     except Exception as error:
         db.rollback()
-        raise HTTPException()
+        raise HTTPException(status_code=400, detail= f"Error al registrar el usuario {error}")
 
 
 
