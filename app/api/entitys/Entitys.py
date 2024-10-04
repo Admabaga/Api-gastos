@@ -12,9 +12,9 @@ class Usuario(Base):
     edad=Column(Integer)
     correo=Column(String(20))
     contraseña=Column(String(10))
-    ciudad=Column(Integer)
+    ciudad=Column(String(50))
     fechaRegistro=Column(Date)
-    telefono=Column(Integer)
+    telefono=Column(String(20))
 
 
 class Gasto(Base):
