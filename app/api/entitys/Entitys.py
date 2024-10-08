@@ -11,7 +11,7 @@ class Usuario(Base):
     nombre=Column(String(50))
     edad=Column(Integer)
     correo=Column(String(20))
-    contraseña=Column(String(10))
+    contraseña=Column(String(60))
     ciudad=Column(String(50))
     fechaRegistro=Column(Date)
     telefono=Column(String(20))
@@ -23,7 +23,7 @@ class Gasto(Base):
     monto=Column(Integer)
     fecha=Column(Date)
     descripcion=Column(String(250))
-    nombre=(String(50))
+    nombre=Column(String(100))
 
 class Categoria(Base):
     __tablename__ = 'categoria'

@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from fastapi.params import Depends
 from app.api.DTOS.DTO import UsuarioDTOPeticion, UsuarioDTORespuesta, GastoDTOPeticion, GastoDTORespuesta, CategoriaDTOPeticion, CategoriaDTORespuesta, MetodoPagoDTOPeticion, MetodoPagoDTORespuesta
-from app.api.entitys.Entitys import Usuario, Gasto, Categoria
+from app.api.entitys.Entitys import Usuario, Gasto, Categoria, MetodoPago
 from app.database.config import sessionLocal, engine
 
 # para que una api funcione debe tener un archivo enrutador
@@ -61,15 +61,15 @@ def guardarGasto(datosPeticion: GastoDTOPeticion,
             monto=datosPeticion.monto,
             fecha=datosPeticion.fecha,
             descripcion=datosPeticion.descripcion,
-            nombre=datosPeticion.nombre,
+            nombre=datosPeticion.nombre
         )
-        db.add(gasto)  # Agrego la información a la base de datos
-        db.commit()  # Guarda y verifica
-        db.refresh(gasto)  # y se actualiza
-        return gasto  # Me muestra usuario
+        db.add(gasto)
+        db.commit()
+        db.refresh(gasto)
+        return gasto
     except Exception as error:
         db.rollback()
-        raise HTTPException(status_code=400, detail= f"Error al registrar el usuario {error}")
+        raise HTTPException(status_code=400, detail= f"Error al registrar el gasto {error}")
 
 
 @routes.post("/categorias", response_model=CategoriaDTORespuesta)
@@ -94,8 +94,9 @@ def guardarCategoria(datosPeticion: MetodoPagoDTOPeticion,
                      db: Session = Depends(getDataBase)):  # los : en python establece el tipo de dato
     try:
         metodoPago = MetodoPago(
-            nombre=datosPeticion.nombre,
-            fotoIcono=datosPeticion.fotoIcono,
+            nombreMetodo=datosPeticion.nombreMetodo,
+            valor=datosPeticion.valor,
+            descripcion = datosPeticion.descripcion
         )
         db.add(metodoPago)  # Agrego la información a la base de datos
         db.commit()  # Guarda y verifica
@@ -103,7 +104,7 @@ def guardarCategoria(datosPeticion: MetodoPagoDTOPeticion,
         return metodoPago  # Me muestra usuario
     except Exception as error:
         db.rollback()
-        raise HTTPException(status_code=400, detail= f"Error al registrar el usuario {error}")
+        raise HTTPException(status_code=400, detail= f"Error al registrar el metodo de pago {error}")
 
 
 @routes.get("/usuarios", response_model=List[UsuarioDTORespuesta])
@@ -119,7 +120,7 @@ def buscarUsuario(db: Session = Depends(getDataBase)):
 @routes.get("/gastos", response_model=List[GastoDTORespuesta])
 def buscarGasto(db: Session = Depends(getDataBase)):
     try:
-        listadoGastos = db.query(Usuario).all()
+        listadoGastos = db.query(Gasto).all()
         return listadoGastos
     except Exception as error:
         db.rollback()
@@ -129,7 +130,7 @@ def buscarGasto(db: Session = Depends(getDataBase)):
 @routes.get("/categorias", response_model=List[CategoriaDTORespuesta])
 def buscarCategoria(db: Session = Depends(getDataBase)):
     try:
-        listadoCategoria = db.query(Usuario).all()
+        listadoCategoria = db.query(Categoria).all()
         return listadoCategoria
     except Exception as error:
         db.rollback()
@@ -139,7 +140,7 @@ def buscarCategoria(db: Session = Depends(getDataBase)):
 @routes.get("/metodoPagos", response_model=List[MetodoPagoDTORespuesta])
 def buscarMetodoPago(db: Session = Depends(getDataBase)):
     try:
-        listadoMetodoPago = db.query(Usuario).all()
+        listadoMetodoPago = db.query(MetodoPago).all()
         return listadoMetodoPago
     except Exception as error:
         db.rollback()

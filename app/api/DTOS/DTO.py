@@ -32,6 +32,7 @@ class GastoDTOPeticion(BaseModel):
 
 class GastoDTORespuesta(BaseModel):
     fecha:date
+    monto:int
     descripcion:str
     nombre:str
     class Config:
@@ -50,14 +51,14 @@ class CategoriaDTORespuesta(BaseModel):
         orm_mode=True
 
 class MetodoPagoDTOPeticion(BaseModel):
-    nombre:str
+    nombreMetodo:str
     valor:int
     descripcion:str
     class Config:
         orm_mode=True
 
 class MetodoPagoDTORespuesta(BaseModel):
-    nombre:str
+    nombreMetodo:str
     valor:int
     descripcion:str
     class Config:
