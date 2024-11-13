@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import Engine
 
 
-connectionToDataBase = "mssql+pyodbc://adrian-admin@adrian-123456:Duhast2379497@adrian-123456.database.windows.net:1433/ControlGastos?driver=ODBC+Driver+17+for+SQL+Server&Encrypt=yes&TrustServerCertificate=no"
+connectionToDataBase=f"mysql+mysqlconnector://root:""@localhost:3306/gestionbd"
 
 engine = create_engine(connectionToDataBase)
 
