@@ -27,6 +27,7 @@ class GastoDTOPeticion(BaseModel):
     fecha:date
     descripcion:str
     nombre:str
+    usuarioId: int
     class Config:
         orm_mode=True
 

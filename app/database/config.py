@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.engine import Engine
 
 
-connectionToDataBase=f"mysql+mysqlconnector://root:""@localhost:3306/gestionbd"
+connectionToDataBase="mysql+mysqlconnector://root:""@localhost:3306/gestionbd"
 
 engine = create_engine(connectionToDataBase)
 

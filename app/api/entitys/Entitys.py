@@ -1,5 +1,5 @@
 #Aqui se realizan la creación de las tablas de la base de datos
-from sqlalchemy import Column, Integer, String, Float, Date
+from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -7,23 +7,25 @@ Base = declarative_base()
 
 class Usuario(Base):
     __tablename__ = 'usuario'
-    id=Column(Integer, primary_key=True, autoincrement=True)
-    nombre=Column(String(50))
-    edad=Column(Integer)
-    correo=Column(String(20))
-    contraseña=Column(String(60))
-    ciudad=Column(String(50))
-    fechaRegistro=Column(Date)
-    telefono=Column(String(20))
-
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nombre = Column(String(50))
+    edad = Column(Integer)
+    correo = Column(String(20))
+    contraseña = Column(String(60))
+    ciudad = Column(String(50))
+    fechaRegistro = Column(Date)
+    telefono = Column(String(20))
+    gastos = relationship("Gasto", back_populates="usuarios")
 
 class Gasto(Base):
     __tablename__ = 'gasto'
-    id=Column(Integer, primary_key=True, autoincrement=True)
-    monto=Column(Integer)
-    fecha=Column(Date)
-    descripcion=Column(String(250))
-    nombre=Column(String(100))
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    monto = Column(Integer)
+    fecha = Column(Date)
+    descripcion = Column(String(250))
+    nombre = Column(String(100))
+    usuario_id = Column(Integer, ForeignKey('usuario.id'))
+    usuarios = relationship("Usuario", back_populates="gastos")
 
 class Categoria(Base):
     __tablename__ = 'categoria'
