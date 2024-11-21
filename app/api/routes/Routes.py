@@ -62,7 +62,8 @@ def guardarGasto(datosPeticion: GastoDTOPeticion,
             monto=datosPeticion.monto,
             fecha=datosPeticion.fecha,
             descripcion=datosPeticion.descripcion,
-            nombre=datosPeticion.nombre
+            nombre=datosPeticion.nombre,
+            usuario_id = datosPeticion.usuarioId
         )
         db.add(gasto)
         db.commit()
@@ -126,6 +127,17 @@ def buscarGasto(db: Session = Depends(getDataBase)):
     except Exception as error:
         db.rollback()
         raise HTTPException(status_code=400, detail= f"Error al registrar el usuario {error}")
+
+@routes.get("/gastos/usuarios/{usuarioId}", response_model=List[GastoDTORespuesta])
+def buscarGastosPorUsuario(usuarioId: int, db: Session = Depends(getDataBase)):
+    try:
+        listadoGastos = db.query(Gasto).filter(Gasto.usuario_id == usuarioId).order_by(desc(Gasto.fecha)).all()
+        if not listadoGastos:
+            raise HTTPException(status_code=404, detail="No se encontraron gastos para el usuario especificado")
+        return listadoGastos
+    except Exception as error:
+        db.rollback()
+        raise HTTPException(status_code=400, detail=f"Error al buscar los gastos: {error}")
 
 
 @routes.get("/categorias", response_model=List[CategoriaDTORespuesta])
