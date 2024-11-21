@@ -132,8 +132,8 @@ def buscarGasto(db: Session = Depends(getDataBase)):
 def buscarGastosPorUsuario(usuarioId: int, db: Session = Depends(getDataBase)):
     try:
         listadoGastos = db.query(Gasto).filter(Gasto.usuario_id == usuarioId).order_by(desc(Gasto.fecha)).all()
-        if not listadoGastos:
-            raise HTTPException(status_code=404, detail="No se encontraron gastos para el usuario especificado")
+            # if not listadoGastos:
+            #     raise HTTPException(status_code=404, detail="No se encontraron gastos para el usuario especificado")
         return listadoGastos
     except Exception as error:
         db.rollback()
