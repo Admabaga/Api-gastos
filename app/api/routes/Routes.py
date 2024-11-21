@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter, HTTPException
 from sqlalchemy.orm import Session
-from sqlalchemy import desc
+from sqlalchemy import desc, asc
 from typing import List
 from fastapi.params import Depends
 from app.api.DTOS.DTO import UsuarioDTOPeticion, UsuarioDTORespuesta, GastoDTOPeticion, GastoDTORespuesta, CategoriaDTOPeticion, CategoriaDTORespuesta, MetodoPagoDTOPeticion, MetodoPagoDTORespuesta
@@ -112,7 +112,7 @@ def guardarCategoria(datosPeticion: MetodoPagoDTOPeticion,
 @routes.get("/usuarios", response_model=List[UsuarioDTORespuesta])
 def buscarUsuario(db: Session = Depends(getDataBase)):
     try:
-        listadoUsuarios = db.query(Usuario).all()
+        listadoUsuarios = db.query(Usuario).order_by(asc(Usuario.nombre)).all()
         return listadoUsuarios
     except Exception as error:
         db.rollback()
