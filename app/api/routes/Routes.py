@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import desc, asc
 from typing import List
 from fastapi.params import Depends
-from app.api.DTOS.DTO import UsuarioDTOPeticion, UsuarioDTORespuesta, GastoDTOPeticion, GastoDTORespuesta, CategoriaDTOPeticion, CategoriaDTORespuesta, MetodoPagoDTOPeticion, MetodoPagoDTORespuesta
+from app.api.DTOS.DTO import UsuarioDTOPeticion, UsuarioDTORespuesta, GastoDTOPeticion, GastoDTORespuesta, CategoriaDTOPeticion, CategoriaDTORespuesta, MetodoPagoDTOPeticion, MetodoPagoDTORespuesta, LoginRespuesta, LoginPeticion
 from app.api.entitys.Entitys import Usuario, Gasto, Categoria, MetodoPago
 from app.database.config import sessionLocal, engine
 
@@ -160,7 +160,23 @@ def buscarMetodoPago(db: Session = Depends(getDataBase)):
         raise HTTPException(status_code=400, detail= f"Error al registrar el usuario {error}")
 
 
+@routes.post("/usuarios/login", response_model=LoginRespuesta)
+def login(login_data: LoginPeticion, db: Session = Depends(getDataBase)):
+    # Buscar el usuario en la base de datos por correo
+    usuario = db.query(Usuario).filter(Usuario.correo == login_data.correo).first()
 
+    # Validar si el usuario existe
+    if not usuario:
+        raise HTTPException(
+            status_code=401,
+            detail="Usuario y/o contraseña incorretos."
+        )
+    if login_data.password != usuario.contraseña:
+        raise HTTPException(
+            status_code=401,
+            detail="Usuario y/o contraseña incorretos."
+        )
+    return LoginRespuesta(usuario_id=usuario.id)
 
 
 

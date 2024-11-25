@@ -67,3 +67,9 @@ class MetodoPagoDTORespuesta(BaseModel):
     class Config:
         orm_mode=True
 
+class LoginPeticion(BaseModel):
+    correo: str
+    password: str
+
+class LoginRespuesta(BaseModel):
+    usuario_id: int
