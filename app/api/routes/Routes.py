@@ -161,17 +161,14 @@ def buscarMetodoPago(db: Session = Depends(getDataBase)):
 
 
 @routes.post("/usuarios/login", response_model=LoginRespuesta)
-def login(login_data: LoginPeticion, db: Session = Depends(getDataBase)):
-    # Buscar el usuario en la base de datos por correo
-    usuario = db.query(Usuario).filter(Usuario.correo == login_data.correo).first()
-
-    # Validar si el usuario existe
+def login(datosLogin: LoginPeticion, db: Session = Depends(getDataBase)):
+    usuario = db.query(Usuario).filter(Usuario.correo == datosLogin.correo).first()
     if not usuario:
         raise HTTPException(
             status_code=401,
             detail="Usuario y/o contraseña incorretos."
         )
-    if login_data.password != usuario.contraseña:
+    if datosLogin.password != usuario.contraseña:
         raise HTTPException(
             status_code=401,
             detail="Usuario y/o contraseña incorretos."
